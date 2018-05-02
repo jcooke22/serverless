@@ -1,0 +1,4 @@
+.idea
+output.log
+env.json
+__pycache__
