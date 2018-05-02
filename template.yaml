@@ -1,0 +1,18 @@
+AWSTemplateFormatVersion : '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Example serverless pipeline
+Resources:
+
+  MyExampleServerlessApp:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/lambda.handler
+      Runtime: python3.6
+      CodeUri: ./
+      Description: An example serverless application
+      Events:
+        MyEndpoint:
+          Type: Api
+          Properties:
+            Path: /my-endpoint
+            Method: get
