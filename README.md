@@ -128,6 +128,8 @@ This will launch a Docker container using the official Amazon Lambda image, whic
 
 When returning a response from a Lambda function, you must ensure that you return a response object which has a `body` and `statusCode` attribute. The provided example in `/src/lambda.py` should get you started.
 
+If your application requires a Lambda function that is invoked by another means than an api gateway, then the [Docker-Lambda documentation](https://github.com/lambci/docker-lambda#example) provides some [examples](https://github.com/lambci/docker-lambda#example) in how the `deploy.sh` command could be modified.
+
 **Defining endpoints and handlers - template.yaml**
 
 The `template.yaml` file is a [`SAM` configuration document](https://docs.aws.amazon.com/lambda/latest/dg/serverless_app.html) which is used to define:
@@ -159,6 +161,12 @@ https://**randomcharacters**.execute-api.**region-name**.amazonaws.com/Prod/**my
 
 If a deployment fails, CloudFormation will keep the stack in a `ROLLBACK_COMPLETE` state to allow for manual debugging. You will need to log in via the [AWS console](https://eu-west-2.console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks?filter=active) to manually clear the failed stack. 
 
+## Extending this application
+
+This package provides a starting point for getting up and running with a single type of use case; an api-gateway which is used to trigger a Lambda function. There are many other ways in which this package could be used. Fortunately a number of examples are provided on how to solve many common problems via the official [SAM repository](https://github.com/awslabs/serverless-application-model/tree/develop/examples/apps).
+
+Also, check out the [general guide to SAM](https://github.com/awslabs/serverless-application-model/blob/master/HOWTO.md). 
+
 ## Limitations of Lambda
 
 - 50Mb maximum size of your codebase with dependencies (compressed) 
@@ -172,6 +180,12 @@ If a deployment fails, CloudFormation will keep the stack in a `ROLLBACK_COMPLET
 By far the biggest issue is that for Lambdas to remain fast, and respond within milliseconds, you cannot have a build process to install dependencies as we'd traditionally do in a server-based architecture. This means that all dependencies must be packaged with your codebase and when deployed to S3, cannot exceed 50Mb. 
 
 More limitations are also available via the official [AWS documentation](https://docs.aws.amazon.com/lambda/latest/dg/limits.html).
+
+**Pre-compiled packages for AWS Lambda**
+
+- https://github.com/ryfeus/lambda-packs
+- https://github.com/chennavarri/aws-lambda-pandas-sample
+- https://github.com/Miserlou/lambda-packages
 
 ## Advanced topics
 
